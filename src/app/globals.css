@@ -37,6 +37,30 @@
   --max-width-container: 1200px;
 }
 
+/* Dark mode token overrides */
+.dark {
+  --color-primary: #9aa4b2;
+  --color-primary-light: #aab4c1;
+  --color-primary-dark: #6b7280;
+
+  --color-accent: #14b8a6;
+  --color-success: #10b981;
+  --color-warning: #f59e0b;
+  --color-error: #ef4444;
+  --color-info: #60a5fa;
+
+  --color-background: #0b1220;
+  --color-surface: #0f172a;
+  --color-surface-secondary: #111827;
+  --color-border: #1f2a44;
+  --color-border-dark: #2b3758;
+
+  --color-text-primary: #e5e7eb;
+  --color-text-secondary: #cbd5e1;
+  --color-text-tertiary: #94a3b8;
+  --color-text-disabled: #64748b;
+}
+
 @layer base {
   html {
     scroll-behavior: smooth;
@@ -46,8 +70,8 @@
     font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
       sans-serif;
     line-height: 1.6;
-    color: #1e293b;
-    background-color: #f8fafc;
+    color: var(--color-text-primary);
+    background-color: var(--color-background);
   }
 
   * {
@@ -57,8 +81,8 @@
 
 @layer utilities {
   .btn-primary {
-    background-color: #14b8a6;
-    color: white;
+    background-color: var(--color-accent);
+    color: #ffffff;
     font-weight: 600;
     padding: 0.75rem 1.25rem;
     border-radius: 0.5rem;
@@ -74,19 +98,19 @@
   }
 
   .btn-secondary {
-    background-color: white;
-    color: #374151;
+    background-color: var(--color-surface);
+    color: var(--color-text-primary);
     font-weight: 600;
     padding: 0.75rem 1.25rem;
     border-radius: 0.5rem;
-    border: 1px solid #374151;
+    border: 1px solid var(--color-text-primary);
     transition: all 0.3s;
     font-size: 0.875rem;
   }
 
   .btn-secondary:hover {
-    background-color: #f1f5f9;
-    box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.1);
+    background-color: var(--color-surface-secondary);
+    box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.2);
   }
 
   .btn-large {
@@ -102,25 +126,33 @@
   }
 
   .card {
-    background-color: white;
+    background-color: var(--color-surface);
     border-radius: 1rem;
-    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
-    border: 1px solid #e2e8f0;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2);
+    border: 1px solid var(--color-border);
     padding: 1.5rem;
     transition: all 0.3s;
   }
 
   .card:hover {
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.25);
     transform: translateY(-4px);
   }
 
   .gradient-bg {
-    background: linear-gradient(135deg, #f1f5f9 0%, #f8fafc 100%);
+    background: linear-gradient(
+      135deg,
+      var(--color-surface-secondary) 0%,
+      var(--color-background) 100%
+    );
   }
 
   .text-gradient {
-    background: linear-gradient(135deg, #374151 0%, #1f2937 100%);
+    background: linear-gradient(
+      135deg,
+      var(--color-text-secondary) 0%,
+      var(--color-text-primary) 100%
+    );
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;

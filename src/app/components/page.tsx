@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Button,
   Badge,
@@ -33,6 +33,32 @@ export default function ComponentsDemo() {
   const [checkboxChecked, setCheckboxChecked] = useState(false);
   const [radioValue, setRadioValue] = useState("option1");
   const [selectValue, setSelectValue] = useState("");
+  const [theme, setTheme] = useState<string | null>(null);
+
+  useEffect(() => {
+    const stored =
+      typeof window !== "undefined" ? localStorage.getItem("theme") : null;
+    if (stored) {
+      setTheme(stored);
+    } else {
+      const prefersDark =
+        typeof window !== "undefined" &&
+        window.matchMedia("(prefers-color-scheme: dark)").matches;
+      setTheme(prefersDark ? "dark" : "light");
+    }
+  }, []);
+
+  const toggleTheme = () => {
+    const next = theme === "dark" ? "light" : "dark";
+    setTheme(next);
+    try {
+      localStorage.setItem("theme", next);
+    } catch {}
+    if (typeof document !== "undefined") {
+      if (next === "dark") document.documentElement.classList.add("dark");
+      else document.documentElement.classList.remove("dark");
+    }
+  };
 
   const tabs = [
     {
@@ -92,15 +118,32 @@ export default function ComponentsDemo() {
   ];
 
   return (
-    <div className="min-h-screen bg-toss-neutral-gray_50 p-8">
+    <div
+      className="min-h-screen p-8"
+      style={{ backgroundColor: "var(--color-background)" }}
+    >
       <div className="max-w-6xl mx-auto space-y-8">
-        <div className="text-center">
-          <h1 className="text-toss-display-lg font-bold text-toss-neutral-black mb-4">
-            MatchUp UI 컴포넌트 데모
-          </h1>
-          <p className="text-toss-body-lg text-toss-neutral-gray_700">
-            프로젝트에서 사용할 수 있는 다양한 재사용 가능한 컴포넌트들입니다.
-          </p>
+        <div className="flex items-center justify-between">
+          <div className="text-center flex-1">
+            <h1
+              className="text-toss-display-lg font-bold mb-4"
+              style={{ color: "var(--color-text-primary)" }}
+            >
+              MatchUp UI 컴포넌트 데모
+            </h1>
+            <p
+              className="text-toss-body-lg"
+              style={{ color: "var(--color-text-secondary)" }}
+            >
+              프로젝트에서 사용할 수 있는 다양한 재사용 가능한 컴포넌트들입니다.
+            </p>
+          </div>
+          <button
+            onClick={toggleTheme}
+            className="btn-secondary ml-4 whitespace-nowrap"
+          >
+            {theme === "dark" ? "라이트 모드" : "다크 모드"}
+          </button>
         </div>
 
         {/* Primary Buttons */}
@@ -639,7 +682,12 @@ export default function ComponentsDemo() {
                 <Divider />
               </div>
               <div className="relative flex justify-center text-sm">
-                <span className="bg-white px-2 text-text-secondary">또는</span>
+                <span
+                  className="px-2 text-text-secondary"
+                  style={{ backgroundColor: "var(--color-surface)" }}
+                >
+                  또는
+                </span>
               </div>
             </div>
           </div>
